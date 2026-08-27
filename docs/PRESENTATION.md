@@ -26,3 +26,16 @@ curl -X POST http://localhost:8000/v1/decision-coverage-dossiers -d '{"decision_
 
 ## Pour qui ?
 Devs, auditeurs, ops, chercheurs — qui ont besoin d'une preuve opposable, pas d'un verdict déclaratif.
+
+## Problèmes réglés (détaillés)
+- **Decisionforge** → - Preuve / dossier / trace non opposable → résolu par dossier immuable et hash SHA-256
+- **Decisionforge** → - Verdict déclaratif sans justification → le dossier expose obligations, fournisseurs et ratios
+- **Decisionforge** → - Chaînage caché ou lacune invisible → serveur recharge et recalcule indépendamment du client
+- **Decisionforge** → - Tiers qui ne peut pas relancer → le dossier est public et rejouable sans clé client
+
+## Exemples d'utilisation (scénarios réels)
+- **Comité investissement** → le dossier sert de preuve technique (pas d'autorité déclarative)
+- **Architecture logicielle (ADR)** → le dossier sert de preuve technique (pas d'autorité déclarative)
+- **Appel d'offres (couverture critères)** → le dossier sert de preuve technique (pas d'autorité déclarative)
+
+
