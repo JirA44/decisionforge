@@ -1,4 +1,4 @@
-# Decisionforge — Présentation complète
+# DecisionForge — Présentation complète
 
 ## Présentation
 decisionforge est un registre immuable, hashé (SHA-256), auditable et rejouable.
