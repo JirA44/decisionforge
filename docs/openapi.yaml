@@ -1,0 +1,2625 @@
+openapi: 3.1.0
+info:
+  title: DecisionForge API
+  description: Registre immuable de décisions, recommandations déterministes, analyses
+    bornées de sensibilité, comparaisons, consensus, calibration et stabilité chronologique
+    recalculés à partir des preuves persistées, avec attribution chronologique des
+    changements. La couverture des critères est également qualifiée sur des séries
+    compatibles.
+  version: 1.0.7
+paths:
+  /health:
+    get:
+      tags:
+      - system
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /info:
+    get:
+      tags:
+      - system
+      summary: Info
+      operationId: info_info_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /v1/decisions:
+    get:
+      tags:
+      - decisions
+      summary: List Decisions
+      operationId: list_decisions_v1_decisions_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DecisionSnapshot'
+                type: array
+                title: Response List Decisions V1 Decisions Get
+    post:
+      tags:
+      - decisions
+      summary: Create Decision
+      operationId: create_decision_v1_decisions_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionSnapshot'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/decisions/{decision_id}:
+    get:
+      tags:
+      - decisions
+      summary: Get Decision
+      operationId: get_decision_v1_decisions__decision_id__get
+      parameters:
+      - name: decision_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Decision Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionSnapshot'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/evaluations:
+    post:
+      tags:
+      - evaluations
+      summary: Create Evaluation
+      operationId: create_evaluation_v1_evaluations_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluationCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/evaluations/{evaluation_id}:
+    get:
+      tags:
+      - evaluations
+      summary: Get Evaluation
+      operationId: get_evaluation_v1_evaluations__evaluation_id__get
+      parameters:
+      - name: evaluation_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Evaluation Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/sensitivity-analyses:
+    post:
+      tags:
+      - sensitivity
+      summary: Create Sensitivity Analysis
+      operationId: create_sensitivity_analysis_v1_sensitivity_analyses_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensitivityAnalysisCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensitivityAnalysis'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/sensitivity-analyses/{analysis_id}:
+    get:
+      tags:
+      - sensitivity
+      summary: Get Sensitivity Analysis
+      operationId: get_sensitivity_analysis_v1_sensitivity_analyses__analysis_id__get
+      parameters:
+      - name: analysis_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Analysis Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensitivityAnalysis'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/decision-comparisons:
+    post:
+      tags:
+      - comparisons
+      summary: Create Decision Comparison
+      operationId: create_decision_comparison_v1_decision_comparisons_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionComparisonCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionComparison'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/decision-comparisons/{comparison_id}:
+    get:
+      tags:
+      - comparisons
+      summary: Get Decision Comparison
+      operationId: get_decision_comparison_v1_decision_comparisons__comparison_id__get
+      parameters:
+      - name: comparison_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Comparison Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionComparison'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/consensus-dossiers:
+    post:
+      tags:
+      - consensus
+      summary: Create Consensus Dossier
+      operationId: create_consensus_dossier_v1_consensus_dossiers_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsensusDossierCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsensusDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/consensus-dossiers/{dossier_id}:
+    get:
+      tags:
+      - consensus
+      summary: Get Consensus Dossier
+      operationId: get_consensus_dossier_v1_consensus_dossiers__dossier_id__get
+      parameters:
+      - name: dossier_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Dossier Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsensusDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/calibration-dossiers:
+    get:
+      tags:
+      - calibration
+      summary: List Calibration Dossiers
+      operationId: list_calibration_dossiers_v1_calibration_dossiers_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CalibrationDossier'
+                type: array
+                title: Response List Calibration Dossiers V1 Calibration Dossiers
+                  Get
+    post:
+      tags:
+      - calibration
+      summary: Create Calibration Dossier
+      operationId: create_calibration_dossier_v1_calibration_dossiers_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalibrationDossierCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalibrationDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/calibration-dossiers/{dossier_id}:
+    get:
+      tags:
+      - calibration
+      summary: Get Calibration Dossier
+      operationId: get_calibration_dossier_v1_calibration_dossiers__dossier_id__get
+      parameters:
+      - name: dossier_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Dossier Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalibrationDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/decision-stability-dossiers:
+    get:
+      tags:
+      - stability
+      summary: List Decision Stability Dossiers
+      operationId: list_decision_stability_dossiers_v1_decision_stability_dossiers_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DecisionStabilityDossier'
+                type: array
+                title: Response List Decision Stability Dossiers V1 Decision Stability
+                  Dossiers Get
+    post:
+      tags:
+      - stability
+      summary: Create Decision Stability Dossier
+      operationId: create_decision_stability_dossier_v1_decision_stability_dossiers_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionStabilityDossierCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionStabilityDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/decision-stability-dossiers/{dossier_id}:
+    get:
+      tags:
+      - stability
+      summary: Get Decision Stability Dossier
+      operationId: get_decision_stability_dossier_v1_decision_stability_dossiers__dossier_id__get
+      parameters:
+      - name: dossier_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Dossier Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionStabilityDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/decision-change-attribution-dossiers:
+    get:
+      tags:
+      - attribution
+      summary: List Decision Change Attribution Dossiers
+      operationId: list_decision_change_attribution_dossiers_v1_decision_change_attribution_dossiers_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DecisionChangeAttributionDossier'
+                type: array
+                title: Response List Decision Change Attribution Dossiers V1 Decision
+                  Change Attribution Dossiers Get
+    post:
+      tags:
+      - attribution
+      summary: Create Decision Change Attribution Dossier
+      operationId: create_decision_change_attribution_dossier_v1_decision_change_attribution_dossiers_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionChangeAttributionDossierCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionChangeAttributionDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/decision-change-attribution-dossiers/{dossier_id}:
+    get:
+      tags:
+      - attribution
+      summary: Get Decision Change Attribution Dossier
+      operationId: get_decision_change_attribution_dossier_v1_decision_change_attribution_dossiers__dossier_id__get
+      parameters:
+      - name: dossier_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Dossier Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionChangeAttributionDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/criterion-coverage-dossiers:
+    get:
+      tags:
+      - coverage
+      summary: List Criterion Coverage Dossiers
+      operationId: list_criterion_coverage_dossiers_v1_criterion_coverage_dossiers_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CriterionCoverageDossier'
+                type: array
+                title: Response List Criterion Coverage Dossiers V1 Criterion Coverage
+                  Dossiers Get
+    post:
+      tags:
+      - coverage
+      summary: Create Criterion Coverage Dossier
+      operationId: create_criterion_coverage_dossier_v1_criterion_coverage_dossiers_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriterionCoverageDossierCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CriterionCoverageDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/criterion-coverage-dossiers/{dossier_id}:
+    get:
+      tags:
+      - coverage
+      summary: Get Criterion Coverage Dossier
+      operationId: get_criterion_coverage_dossier_v1_criterion_coverage_dossiers__dossier_id__get
+      parameters:
+      - name: dossier_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Dossier Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CriterionCoverageDossier'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/audit-events:
+    get:
+      tags:
+      - audit
+      summary: List Audit Events
+      operationId: list_audit_events_v1_audit_events_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AuditEvent'
+                type: array
+                title: Response List Audit Events V1 Audit Events Get
+components:
+  schemas:
+    AlternativeComparison:
+      properties:
+        alternative_key:
+          type: string
+          title: Alternative Key
+        baseline_rank:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Baseline Rank
+        candidate_rank:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Candidate Rank
+        rank_change:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rank Change
+        baseline_score:
+          type: number
+          title: Baseline Score
+        candidate_score:
+          type: number
+          title: Candidate Score
+        score_change:
+          type: number
+          title: Score Change
+        baseline_coverage:
+          type: number
+          title: Baseline Coverage
+        candidate_coverage:
+          type: number
+          title: Candidate Coverage
+        coverage_change:
+          type: number
+          title: Coverage Change
+        eligibility_changed:
+          type: boolean
+          title: Eligibility Changed
+      additionalProperties: false
+      type: object
+      required:
+      - alternative_key
+      - baseline_rank
+      - candidate_rank
+      - rank_change
+      - baseline_score
+      - candidate_score
+      - score_change
+      - baseline_coverage
+      - candidate_coverage
+      - coverage_change
+      - eligibility_changed
+      title: AlternativeComparison
+    AlternativeCreate:
+      properties:
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+          pattern: ^[A-Za-z][A-Za-z0-9_-]*$
+          title: Key
+        label:
+          type: string
+          maxLength: 200
+          minLength: 1
+          title: Label
+        description:
+          type: string
+          maxLength: 2000
+          title: Description
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - label
+      title: AlternativeCreate
+    AuditEvent:
+      properties:
+        sequence:
+          type: integer
+          title: Sequence
+        event_type:
+          type: string
+          title: Event Type
+        entity_type:
+          type: string
+          title: Entity Type
+        entity_id:
+          type: string
+          title: Entity Id
+        payload:
+          additionalProperties: true
+          type: object
+          title: Payload
+        created_at:
+          type: string
+          title: Created At
+      type: object
+      required:
+      - sequence
+      - event_type
+      - entity_type
+      - entity_id
+      - payload
+      - created_at
+      title: AuditEvent
+    CalibrationBin:
+      properties:
+        index:
+          type: integer
+          title: Index
+        lower_bound:
+          type: number
+          title: Lower Bound
+        upper_bound:
+          type: number
+          title: Upper Bound
+        count:
+          type: integer
+          title: Count
+        average_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Average Confidence
+        observed_accuracy:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Observed Accuracy
+        calibration_gap:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Calibration Gap
+      additionalProperties: false
+      type: object
+      required:
+      - index
+      - lower_bound
+      - upper_bound
+      - count
+      - average_confidence
+      - observed_accuracy
+      - calibration_gap
+      title: CalibrationBin
+    CalibrationDossier:
+      properties:
+        id:
+          type: string
+          title: Id
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Evaluation Ids
+        method:
+          type: string
+          title: Method
+        qualification:
+          type: string
+          enum:
+          - CALIBRATED
+          - MISALIGNED
+          - INSUFFICIENT
+          - INCOMPATIBLE
+          title: Qualification
+        compatible:
+          type: boolean
+          title: Compatible
+        evaluation_count:
+          type: integer
+          title: Evaluation Count
+        usable_evaluation_count:
+          type: integer
+          title: Usable Evaluation Count
+        coverage:
+          type: number
+          title: Coverage
+        brier_score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Brier Score
+        bounded_log_loss:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Bounded Log Loss
+        expected_calibration_error:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Expected Calibration Error
+        resolution:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Resolution
+        worst_bin_index:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Worst Bin Index
+        evaluations:
+          items:
+            $ref: '#/components/schemas/CalibrationEvaluation'
+          type: array
+          title: Evaluations
+        bins:
+          items:
+            $ref: '#/components/schemas/CalibrationBin'
+          type: array
+          title: Bins
+        explanations:
+          items:
+            type: string
+          type: array
+          title: Explanations
+        input_hash:
+          type: string
+          title: Input Hash
+        dossier_hash:
+          type: string
+          title: Dossier Hash
+        reproducible:
+          type: boolean
+          title: Reproducible
+          default: true
+        idempotent_replay:
+          type: boolean
+          title: Idempotent Replay
+          default: false
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        created_at:
+          type: string
+          title: Created At
+        warning:
+          type: string
+          title: Warning
+          default: Ce dossier mesure une calibration historique. Il ne prédit pas
+            une performance future et ne déclenche, n'approuve ni n'autorise aucune
+            action.
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - evaluation_ids
+      - method
+      - qualification
+      - compatible
+      - evaluation_count
+      - usable_evaluation_count
+      - coverage
+      - brier_score
+      - bounded_log_loss
+      - expected_calibration_error
+      - resolution
+      - worst_bin_index
+      - evaluations
+      - bins
+      - explanations
+      - input_hash
+      - dossier_hash
+      - created_at
+      title: CalibrationDossier
+    CalibrationDossierCreate:
+      properties:
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          maxItems: 500
+          minItems: 3
+          title: Evaluation Ids
+      additionalProperties: false
+      type: object
+      required:
+      - evaluation_ids
+      title: CalibrationDossierCreate
+    CalibrationEvaluation:
+      properties:
+        evaluation_id:
+          type: string
+          title: Evaluation Id
+        decision_id:
+          type: string
+          title: Decision Id
+        predicted_alternative_key:
+          type: string
+          title: Predicted Alternative Key
+        observed_alternative_key:
+          type: string
+          title: Observed Alternative Key
+        confidence:
+          type: number
+          title: Confidence
+        observed_probability:
+          type: number
+          title: Observed Probability
+        correct:
+          type: boolean
+          title: Correct
+        recomputed_outcome_hash:
+          type: string
+          title: Recomputed Outcome Hash
+      additionalProperties: false
+      type: object
+      required:
+      - evaluation_id
+      - decision_id
+      - predicted_alternative_key
+      - observed_alternative_key
+      - confidence
+      - observed_probability
+      - correct
+      - recomputed_outcome_hash
+      title: CalibrationEvaluation
+    ConsensusAlternative:
+      properties:
+        alternative_key:
+          type: string
+          title: Alternative Key
+        recommendation_count:
+          type: integer
+          title: Recommendation Count
+        recommendation_share:
+          type: number
+          title: Recommendation Share
+        average_rank:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Average Rank
+        rank_dispersion:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Rank Dispersion
+        average_score:
+          type: number
+          title: Average Score
+        score_dispersion:
+          type: number
+          title: Score Dispersion
+        minimum_coverage:
+          type: number
+          title: Minimum Coverage
+        eligible_count:
+          type: integer
+          title: Eligible Count
+        eligible_share:
+          type: number
+          title: Eligible Share
+        all_eligible:
+          type: boolean
+          title: All Eligible
+      additionalProperties: false
+      type: object
+      required:
+      - alternative_key
+      - recommendation_count
+      - recommendation_share
+      - average_rank
+      - rank_dispersion
+      - average_score
+      - score_dispersion
+      - minimum_coverage
+      - eligible_count
+      - eligible_share
+      - all_eligible
+      title: ConsensusAlternative
+    ConsensusDossier:
+      properties:
+        id:
+          type: string
+          title: Id
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Evaluation Ids
+        method:
+          type: string
+          title: Method
+        evaluation_method:
+          type: string
+          title: Evaluation Method
+        qualification:
+          type: string
+          enum:
+          - CONSENSUS
+          - STABLE_MAJORITY
+          - DIVIDED
+          - INSUFFICIENT
+          - INCOMPATIBLE
+          title: Qualification
+        compatible:
+          type: boolean
+          title: Compatible
+        evaluation_count:
+          type: integer
+          title: Evaluation Count
+        sufficient_evaluation_count:
+          type: integer
+          title: Sufficient Evaluation Count
+        majority_alternative_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Majority Alternative Key
+        majority_share:
+          type: number
+          title: Majority Share
+        evaluations:
+          items:
+            $ref: '#/components/schemas/RecomputedEvaluationSnapshot'
+          type: array
+          title: Evaluations
+        alternatives:
+          items:
+            $ref: '#/components/schemas/ConsensusAlternative'
+          type: array
+          title: Alternatives
+        minimum_winner_margin:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Minimum Winner Margin
+        explanations:
+          items:
+            type: string
+          type: array
+          title: Explanations
+        input_hash:
+          type: string
+          title: Input Hash
+        dossier_hash:
+          type: string
+          title: Dossier Hash
+        reproducible:
+          type: boolean
+          title: Reproducible
+          default: true
+        idempotent_replay:
+          type: boolean
+          title: Idempotent Replay
+          default: false
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        created_at:
+          type: string
+          title: Created At
+        warning:
+          type: string
+          title: Warning
+          default: Ce dossier décrit un accord statistique entre évaluations compatibles.
+            Il ne produit aucune recommandation opérationnelle et ne déclenche, n'approuve
+            ni n'autorise aucune action.
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - evaluation_ids
+      - method
+      - evaluation_method
+      - qualification
+      - compatible
+      - evaluation_count
+      - sufficient_evaluation_count
+      - majority_alternative_key
+      - majority_share
+      - evaluations
+      - alternatives
+      - minimum_winner_margin
+      - explanations
+      - input_hash
+      - dossier_hash
+      - created_at
+      title: ConsensusDossier
+    ConsensusDossierCreate:
+      properties:
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          maxItems: 50
+          minItems: 3
+          title: Evaluation Ids
+      additionalProperties: false
+      type: object
+      required:
+      - evaluation_ids
+      title: ConsensusDossierCreate
+    CriterionContribution:
+      properties:
+        criterion_key:
+          type: string
+          title: Criterion Key
+        net_effect:
+          type: number
+          title: Net Effect
+        absolute_effect:
+          type: number
+          title: Absolute Effect
+        observation_change_count:
+          type: integer
+          title: Observation Change Count
+        comparable:
+          type: boolean
+          title: Comparable
+      additionalProperties: false
+      type: object
+      required:
+      - criterion_key
+      - net_effect
+      - absolute_effect
+      - observation_change_count
+      - comparable
+      title: CriterionContribution
+    CriterionCoverageDossier:
+      properties:
+        id:
+          type: string
+          title: Id
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Evaluation Ids
+        chronological_evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Chronological Evaluation Ids
+        method:
+          type: string
+          title: Method
+        evaluation_method:
+          type: string
+          title: Evaluation Method
+        qualification:
+          type: string
+          enum:
+          - COMPLETE
+          - PARTIAL
+          - INSUFFICIENT
+          - INCOMPATIBLE
+          title: Qualification
+        compatible:
+          type: boolean
+          title: Compatible
+        evaluation_count:
+          type: integer
+          title: Evaluation Count
+        criterion_count:
+          type: integer
+          title: Criterion Count
+        required_criterion_count:
+          type: integer
+          title: Required Criterion Count
+        common_covered_criterion_keys:
+          items:
+            type: string
+          type: array
+          title: Common Covered Criterion Keys
+        gap_criterion_keys:
+          items:
+            type: string
+          type: array
+          title: Gap Criterion Keys
+        minimum_overall_coverage:
+          type: number
+          title: Minimum Overall Coverage
+        average_overall_coverage:
+          type: number
+          title: Average Overall Coverage
+        worst_evaluation:
+          anyOf:
+          - $ref: '#/components/schemas/EvaluationCriterionCoverage'
+          - type: 'null'
+        evaluations:
+          items:
+            $ref: '#/components/schemas/EvaluationCriterionCoverage'
+          type: array
+          title: Evaluations
+        criteria:
+          items:
+            $ref: '#/components/schemas/CriterionCoverageSummary'
+          type: array
+          title: Criteria
+        explanations:
+          items:
+            type: string
+          type: array
+          title: Explanations
+        input_hash:
+          type: string
+          title: Input Hash
+        evidence_hash:
+          type: string
+          title: Evidence Hash
+        dossier_hash:
+          type: string
+          title: Dossier Hash
+        reproducible:
+          type: boolean
+          title: Reproducible
+          default: true
+        idempotent_replay:
+          type: boolean
+          title: Idempotent Replay
+          default: false
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        automatic_action:
+          type: boolean
+          title: Automatic Action
+          default: false
+        created_at:
+          type: string
+          title: Created At
+        warning:
+          type: string
+          title: Warning
+          default: Ce dossier mesure uniquement la couverture des critères par les
+            observations persistées. Il ne certifie pas les sources et ne déclenche,
+            n'approuve ni n'autorise aucune action.
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - evaluation_ids
+      - chronological_evaluation_ids
+      - method
+      - evaluation_method
+      - qualification
+      - compatible
+      - evaluation_count
+      - criterion_count
+      - required_criterion_count
+      - common_covered_criterion_keys
+      - gap_criterion_keys
+      - minimum_overall_coverage
+      - average_overall_coverage
+      - worst_evaluation
+      - evaluations
+      - criteria
+      - explanations
+      - input_hash
+      - evidence_hash
+      - dossier_hash
+      - created_at
+      title: CriterionCoverageDossier
+    CriterionCoverageDossierCreate:
+      properties:
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          maxItems: 100
+          minItems: 2
+          title: Evaluation Ids
+      additionalProperties: false
+      type: object
+      required:
+      - evaluation_ids
+      title: CriterionCoverageDossierCreate
+    CriterionCoverageSummary:
+      properties:
+        criterion_key:
+          type: string
+          title: Criterion Key
+        required:
+          type: boolean
+          title: Required
+        minimum_confidence:
+          type: number
+          title: Minimum Confidence
+        fully_covered_evaluation_count:
+          type: integer
+          title: Fully Covered Evaluation Count
+        fully_covered_evaluation_share:
+          type: number
+          title: Fully Covered Evaluation Share
+        minimum_coverage:
+          type: number
+          title: Minimum Coverage
+        average_coverage:
+          type: number
+          title: Average Coverage
+        gap_evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Gap Evaluation Ids
+      additionalProperties: false
+      type: object
+      required:
+      - criterion_key
+      - required
+      - minimum_confidence
+      - fully_covered_evaluation_count
+      - fully_covered_evaluation_share
+      - minimum_coverage
+      - average_coverage
+      - gap_evaluation_ids
+      title: CriterionCoverageSummary
+    CriterionCreate:
+      properties:
+        key:
+          type: string
+          maxLength: 64
+          minLength: 1
+          pattern: ^[A-Za-z][A-Za-z0-9_-]*$
+          title: Key
+        label:
+          type: string
+          maxLength: 200
+          minLength: 1
+          title: Label
+        weight:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Weight
+        required:
+          type: boolean
+          title: Required
+          default: true
+        minimum_confidence:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Minimum Confidence
+          default: 0.7
+        blocking_minimum:
+          anyOf:
+          - type: number
+            maximum: 100.0
+            minimum: 0.0
+          - type: 'null'
+          title: Blocking Minimum
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - label
+      - weight
+      title: CriterionCreate
+    DecisionChangeAttributionDossier:
+      properties:
+        id:
+          type: string
+          title: Id
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Evaluation Ids
+        chronological_evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Chronological Evaluation Ids
+        method:
+          type: string
+          title: Method
+        evaluation_method:
+          type: string
+          title: Evaluation Method
+        qualification:
+          type: string
+          enum:
+          - EXPLAINED
+          - PARTIAL
+          - INSUFFICIENT
+          - INCOMPATIBLE
+          title: Qualification
+        compatible:
+          type: boolean
+          title: Compatible
+        evaluation_count:
+          type: integer
+          title: Evaluation Count
+        transition_count:
+          type: integer
+          title: Transition Count
+        changed_transition_count:
+          type: integer
+          title: Changed Transition Count
+        explained_change_count:
+          type: integer
+          title: Explained Change Count
+        unexplained_change_count:
+          type: integer
+          title: Unexplained Change Count
+        dominant_criteria:
+          items:
+            type: string
+          type: array
+          title: Dominant Criteria
+        winning_alternatives:
+          items:
+            type: string
+          type: array
+          title: Winning Alternatives
+        losing_alternatives:
+          items:
+            type: string
+          type: array
+          title: Losing Alternatives
+        worst_transition:
+          anyOf:
+          - $ref: '#/components/schemas/DecisionChangeAttributionTransition'
+          - type: 'null'
+        evaluations:
+          items:
+            $ref: '#/components/schemas/RecomputedEvaluationSnapshot'
+          type: array
+          title: Evaluations
+        transitions:
+          items:
+            $ref: '#/components/schemas/DecisionChangeAttributionTransition'
+          type: array
+          title: Transitions
+        explanations:
+          items:
+            type: string
+          type: array
+          title: Explanations
+        input_hash:
+          type: string
+          title: Input Hash
+        evidence_hash:
+          type: string
+          title: Evidence Hash
+        dossier_hash:
+          type: string
+          title: Dossier Hash
+        reproducible:
+          type: boolean
+          title: Reproducible
+          default: true
+        idempotent_replay:
+          type: boolean
+          title: Idempotent Replay
+          default: false
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        automatic_action:
+          type: boolean
+          title: Automatic Action
+          default: false
+        created_at:
+          type: string
+          title: Created At
+        warning:
+          type: string
+          title: Warning
+          default: Cette attribution décrit des contributions calculées à partir des
+            observations persistées. Elle n'établit pas une causalité externe et ne
+            déclenche, n'approuve ni n'autorise aucune action.
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - evaluation_ids
+      - chronological_evaluation_ids
+      - method
+      - evaluation_method
+      - qualification
+      - compatible
+      - evaluation_count
+      - transition_count
+      - changed_transition_count
+      - explained_change_count
+      - unexplained_change_count
+      - dominant_criteria
+      - winning_alternatives
+      - losing_alternatives
+      - worst_transition
+      - evaluations
+      - transitions
+      - explanations
+      - input_hash
+      - evidence_hash
+      - dossier_hash
+      - created_at
+      title: DecisionChangeAttributionDossier
+    DecisionChangeAttributionDossierCreate:
+      properties:
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          maxItems: 100
+          minItems: 2
+          title: Evaluation Ids
+      additionalProperties: false
+      type: object
+      required:
+      - evaluation_ids
+      title: DecisionChangeAttributionDossierCreate
+    DecisionChangeAttributionTransition:
+      properties:
+        sequence:
+          type: integer
+          title: Sequence
+        from_evaluation_id:
+          type: string
+          title: From Evaluation Id
+        to_evaluation_id:
+          type: string
+          title: To Evaluation Id
+        status_changed:
+          type: boolean
+          title: Status Changed
+        recommendation_changed:
+          type: boolean
+          title: Recommendation Changed
+        ranking_changed:
+          type: boolean
+          title: Ranking Changed
+        change_detected:
+          type: boolean
+          title: Change Detected
+        winning_alternative_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Winning Alternative Key
+        losing_alternative_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Losing Alternative Key
+        alternative_score_deltas:
+          additionalProperties:
+            type: number
+          type: object
+          title: Alternative Score Deltas
+        observation_contributions:
+          items:
+            $ref: '#/components/schemas/ObservationContribution'
+          type: array
+          title: Observation Contributions
+        criterion_contributions:
+          items:
+            $ref: '#/components/schemas/CriterionContribution'
+          type: array
+          title: Criterion Contributions
+        dominant_criteria:
+          items:
+            type: string
+          type: array
+          title: Dominant Criteria
+        change_magnitude:
+          type: number
+          title: Change Magnitude
+        explained:
+          type: boolean
+          title: Explained
+        explanation_completeness:
+          type: number
+          title: Explanation Completeness
+        unexplained_reasons:
+          items:
+            type: string
+          type: array
+          title: Unexplained Reasons
+      additionalProperties: false
+      type: object
+      required:
+      - sequence
+      - from_evaluation_id
+      - to_evaluation_id
+      - status_changed
+      - recommendation_changed
+      - ranking_changed
+      - change_detected
+      - winning_alternative_key
+      - losing_alternative_key
+      - alternative_score_deltas
+      - observation_contributions
+      - criterion_contributions
+      - dominant_criteria
+      - change_magnitude
+      - explained
+      - explanation_completeness
+      - unexplained_reasons
+      title: DecisionChangeAttributionTransition
+    DecisionComparison:
+      properties:
+        id:
+          type: string
+          title: Id
+        baseline_evaluation_id:
+          type: string
+          title: Baseline Evaluation Id
+        candidate_evaluation_id:
+          type: string
+          title: Candidate Evaluation Id
+        method:
+          type: string
+          title: Method
+        qualification:
+          type: string
+          enum:
+          - CONSISTENT
+          - CHANGED
+          - INCOMPATIBLE
+          - INSUFFICIENT
+          title: Qualification
+        compatible:
+          type: boolean
+          title: Compatible
+        baseline:
+          $ref: '#/components/schemas/RecomputedEvaluationSnapshot'
+        candidate:
+          $ref: '#/components/schemas/RecomputedEvaluationSnapshot'
+        recommendation_changed:
+          type: boolean
+          title: Recommendation Changed
+        status_changed:
+          type: boolean
+          title: Status Changed
+        ranking_changed:
+          type: boolean
+          title: Ranking Changed
+        winner_margin_change:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Winner Margin Change
+        alternatives:
+          items:
+            $ref: '#/components/schemas/AlternativeComparison'
+          type: array
+          title: Alternatives
+        explanations:
+          items:
+            type: string
+          type: array
+          title: Explanations
+        comparison_hash:
+          type: string
+          title: Comparison Hash
+        reproducible:
+          type: boolean
+          title: Reproducible
+          default: true
+        idempotent_replay:
+          type: boolean
+          title: Idempotent Replay
+          default: false
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        created_at:
+          type: string
+          title: Created At
+        warning:
+          type: string
+          title: Warning
+          default: Cette comparaison est descriptive, repose uniquement sur les snapshots
+            fournis et ne déclenche ni n'autorise aucune action. Une validation humaine
+            reste nécessaire.
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - baseline_evaluation_id
+      - candidate_evaluation_id
+      - method
+      - qualification
+      - compatible
+      - baseline
+      - candidate
+      - recommendation_changed
+      - status_changed
+      - ranking_changed
+      - winner_margin_change
+      - alternatives
+      - explanations
+      - comparison_hash
+      - created_at
+      title: DecisionComparison
+    DecisionComparisonCreate:
+      properties:
+        baseline_evaluation_id:
+          type: string
+          minLength: 1
+          title: Baseline Evaluation Id
+        candidate_evaluation_id:
+          type: string
+          minLength: 1
+          title: Candidate Evaluation Id
+      additionalProperties: false
+      type: object
+      required:
+      - baseline_evaluation_id
+      - candidate_evaluation_id
+      title: DecisionComparisonCreate
+    DecisionCreate:
+      properties:
+        title:
+          type: string
+          maxLength: 300
+          minLength: 1
+          title: Title
+        problem:
+          type: string
+          maxLength: 5000
+          minLength: 1
+          title: Problem
+        context:
+          type: string
+          maxLength: 5000
+          title: Context
+          default: ''
+        alternatives:
+          items:
+            $ref: '#/components/schemas/AlternativeCreate'
+          type: array
+          maxItems: 20
+          minItems: 2
+          title: Alternatives
+        criteria:
+          items:
+            $ref: '#/components/schemas/CriterionCreate'
+          type: array
+          maxItems: 20
+          minItems: 1
+          title: Criteria
+        observations:
+          items:
+            $ref: '#/components/schemas/ObservationCreate'
+          type: array
+          maxItems: 400
+          title: Observations
+        forecast_outcome:
+          anyOf:
+          - $ref: '#/components/schemas/ForecastOutcomeCreate'
+          - type: 'null'
+      additionalProperties: false
+      type: object
+      required:
+      - title
+      - problem
+      - alternatives
+      - criteria
+      title: DecisionCreate
+    DecisionSnapshot:
+      properties:
+        id:
+          type: string
+          title: Id
+        input_hash:
+          type: string
+          title: Input Hash
+        specification:
+          $ref: '#/components/schemas/DecisionCreate'
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        created_at:
+          type: string
+          title: Created At
+      type: object
+      required:
+      - id
+      - input_hash
+      - specification
+      - created_at
+      title: DecisionSnapshot
+    DecisionStabilityDossier:
+      properties:
+        id:
+          type: string
+          title: Id
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Evaluation Ids
+        chronological_evaluation_ids:
+          items:
+            type: string
+          type: array
+          title: Chronological Evaluation Ids
+        method:
+          type: string
+          title: Method
+        evaluation_method:
+          type: string
+          title: Evaluation Method
+        qualification:
+          type: string
+          enum:
+          - STABLE
+          - DRIFTING
+          - INSUFFICIENT
+          - INCOMPATIBLE
+          title: Qualification
+        compatible:
+          type: boolean
+          title: Compatible
+        evaluation_count:
+          type: integer
+          title: Evaluation Count
+        transition_count:
+          type: integer
+          title: Transition Count
+        status_transition_count:
+          type: integer
+          title: Status Transition Count
+        recommendation_transition_count:
+          type: integer
+          title: Recommendation Transition Count
+        ranking_transition_count:
+          type: integer
+          title: Ranking Transition Count
+        churn_rate:
+          type: number
+          title: Churn Rate
+        longest_status_streak:
+          type: integer
+          title: Longest Status Streak
+        longest_recommendation_streak:
+          type: integer
+          title: Longest Recommendation Streak
+        longest_unchanged_streak:
+          type: integer
+          title: Longest Unchanged Streak
+        first_recommendation:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: First Recommendation
+        last_recommendation:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Recommendation
+        worst_coverage:
+          type: number
+          title: Worst Coverage
+        worst_winner_margin:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Worst Winner Margin
+        evaluations:
+          items:
+            $ref: '#/components/schemas/DecisionStabilityPoint'
+          type: array
+          title: Evaluations
+        transitions:
+          items:
+            $ref: '#/components/schemas/DecisionStabilityTransition'
+          type: array
+          title: Transitions
+        explanations:
+          items:
+            type: string
+          type: array
+          title: Explanations
+        input_hash:
+          type: string
+          title: Input Hash
+        evidence_hash:
+          type: string
+          title: Evidence Hash
+        dossier_hash:
+          type: string
+          title: Dossier Hash
+        reproducible:
+          type: boolean
+          title: Reproducible
+          default: true
+        idempotent_replay:
+          type: boolean
+          title: Idempotent Replay
+          default: false
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        automatic_action:
+          type: boolean
+          title: Automatic Action
+          default: false
+        created_at:
+          type: string
+          title: Created At
+        warning:
+          type: string
+          title: Warning
+          default: Ce dossier décrit une stabilité chronologique à partir de preuves
+            persistées. Il ne déclenche, n'approuve ni n'autorise aucune action et
+            requiert une interprétation humaine.
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - evaluation_ids
+      - chronological_evaluation_ids
+      - method
+      - evaluation_method
+      - qualification
+      - compatible
+      - evaluation_count
+      - transition_count
+      - status_transition_count
+      - recommendation_transition_count
+      - ranking_transition_count
+      - churn_rate
+      - longest_status_streak
+      - longest_recommendation_streak
+      - longest_unchanged_streak
+      - first_recommendation
+      - last_recommendation
+      - worst_coverage
+      - worst_winner_margin
+      - evaluations
+      - transitions
+      - explanations
+      - input_hash
+      - evidence_hash
+      - dossier_hash
+      - created_at
+      title: DecisionStabilityDossier
+    DecisionStabilityDossierCreate:
+      properties:
+        evaluation_ids:
+          items:
+            type: string
+          type: array
+          maxItems: 100
+          minItems: 2
+          title: Evaluation Ids
+      additionalProperties: false
+      type: object
+      required:
+      - evaluation_ids
+      title: DecisionStabilityDossierCreate
+    DecisionStabilityPoint:
+      properties:
+        sequence:
+          type: integer
+          title: Sequence
+        evaluation_id:
+          type: string
+          title: Evaluation Id
+        decision_id:
+          type: string
+          title: Decision Id
+        evaluated_at:
+          type: string
+          title: Evaluated At
+        status:
+          type: string
+          enum:
+          - RECOMMENDED
+          - BLOCKED
+          - INSUFFICIENT
+          title: Status
+        recommended_alternative_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Recommended Alternative Key
+        ranks:
+          additionalProperties:
+            anyOf:
+            - type: integer
+            - type: 'null'
+          type: object
+          title: Ranks
+        minimum_coverage:
+          type: number
+          title: Minimum Coverage
+        winner_margin:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Winner Margin
+        decision_hash:
+          type: string
+          title: Decision Hash
+        recomputed_outcome_hash:
+          type: string
+          title: Recomputed Outcome Hash
+      additionalProperties: false
+      type: object
+      required:
+      - sequence
+      - evaluation_id
+      - decision_id
+      - evaluated_at
+      - status
+      - recommended_alternative_key
+      - ranks
+      - minimum_coverage
+      - winner_margin
+      - decision_hash
+      - recomputed_outcome_hash
+      title: DecisionStabilityPoint
+    DecisionStabilityTransition:
+      properties:
+        sequence:
+          type: integer
+          title: Sequence
+        from_evaluation_id:
+          type: string
+          title: From Evaluation Id
+        to_evaluation_id:
+          type: string
+          title: To Evaluation Id
+        status_changed:
+          type: boolean
+          title: Status Changed
+        recommendation_changed:
+          type: boolean
+          title: Recommendation Changed
+        ranking_changed:
+          type: boolean
+          title: Ranking Changed
+        moved_alternatives:
+          items:
+            type: string
+          type: array
+          title: Moved Alternatives
+      additionalProperties: false
+      type: object
+      required:
+      - sequence
+      - from_evaluation_id
+      - to_evaluation_id
+      - status_changed
+      - recommendation_changed
+      - ranking_changed
+      - moved_alternatives
+      title: DecisionStabilityTransition
+    Evaluation:
+      properties:
+        id:
+          type: string
+          title: Id
+        decision_id:
+          type: string
+          title: Decision Id
+        method:
+          type: string
+          title: Method
+        status:
+          type: string
+          enum:
+          - RECOMMENDED
+          - BLOCKED
+          - INSUFFICIENT
+          title: Status
+        recommended_alternative_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Recommended Alternative Key
+        ranking:
+          items:
+            $ref: '#/components/schemas/RankedAlternative'
+          type: array
+          title: Ranking
+        explanations:
+          items:
+            type: string
+          type: array
+          title: Explanations
+        decision_hash:
+          type: string
+          title: Decision Hash
+        outcome_hash:
+          type: string
+          title: Outcome Hash
+        reproducible:
+          type: boolean
+          title: Reproducible
+          default: true
+        idempotent_replay:
+          type: boolean
+          title: Idempotent Replay
+          default: false
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        created_at:
+          type: string
+          title: Created At
+        warning:
+          type: string
+          title: Warning
+          default: Recommandation calculée à partir des données fournies ; elle ne
+            prouve ni leur exactitude ni l'absence de risques externes. Une validation
+            humaine reste nécessaire.
+      type: object
+      required:
+      - id
+      - decision_id
+      - method
+      - status
+      - recommended_alternative_key
+      - ranking
+      - explanations
+      - decision_hash
+      - outcome_hash
+      - created_at
+      title: Evaluation
+    EvaluationCreate:
+      properties:
+        decision_id:
+          type: string
+          minLength: 1
+          title: Decision Id
+        method:
+          type: string
+          const: weighted-evidence-v1
+          title: Method
+          default: weighted-evidence-v1
+      additionalProperties: false
+      type: object
+      required:
+      - decision_id
+      title: EvaluationCreate
+    EvaluationCriterionCoverage:
+      properties:
+        sequence:
+          type: integer
+          title: Sequence
+        evaluation_id:
+          type: string
+          title: Evaluation Id
+        decision_id:
+          type: string
+          title: Decision Id
+        evaluated_at:
+          type: string
+          title: Evaluated At
+        status:
+          type: string
+          enum:
+          - RECOMMENDED
+          - BLOCKED
+          - INSUFFICIENT
+          title: Status
+        covered_criterion_keys:
+          items:
+            type: string
+          type: array
+          title: Covered Criterion Keys
+        gap_criterion_keys:
+          items:
+            type: string
+          type: array
+          title: Gap Criterion Keys
+        criterion_coverage:
+          additionalProperties:
+            type: number
+          type: object
+          title: Criterion Coverage
+        overall_coverage:
+          type: number
+          title: Overall Coverage
+        decision_hash:
+          type: string
+          title: Decision Hash
+        recomputed_outcome_hash:
+          type: string
+          title: Recomputed Outcome Hash
+      additionalProperties: false
+      type: object
+      required:
+      - sequence
+      - evaluation_id
+      - decision_id
+      - evaluated_at
+      - status
+      - covered_criterion_keys
+      - gap_criterion_keys
+      - criterion_coverage
+      - overall_coverage
+      - decision_hash
+      - recomputed_outcome_hash
+      title: EvaluationCriterionCoverage
+    ForecastOutcomeCreate:
+      properties:
+        predicted_probabilities:
+          additionalProperties:
+            type: number
+          type: object
+          maxProperties: 20
+          minProperties: 2
+          title: Predicted Probabilities
+        observed_alternative_key:
+          type: string
+          maxLength: 64
+          minLength: 1
+          title: Observed Alternative Key
+        prediction_ref:
+          type: string
+          maxLength: 1000
+          minLength: 1
+          title: Prediction Ref
+        outcome_ref:
+          type: string
+          maxLength: 1000
+          minLength: 1
+          title: Outcome Ref
+      additionalProperties: false
+      type: object
+      required:
+      - predicted_probabilities
+      - observed_alternative_key
+      - prediction_ref
+      - outcome_ref
+      title: ForecastOutcomeCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ObservationContribution:
+      properties:
+        alternative_key:
+          type: string
+          title: Alternative Key
+        criterion_key:
+          type: string
+          title: Criterion Key
+        before_score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Before Score
+        after_score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: After Score
+        before_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Before Confidence
+        after_confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: After Confidence
+        before_weighted_component:
+          type: number
+          title: Before Weighted Component
+        after_weighted_component:
+          type: number
+          title: After Weighted Component
+        delta:
+          type: number
+          title: Delta
+        comparable:
+          type: boolean
+          title: Comparable
+        source_changed:
+          type: boolean
+          title: Source Changed
+      additionalProperties: false
+      type: object
+      required:
+      - alternative_key
+      - criterion_key
+      - before_score
+      - after_score
+      - before_confidence
+      - after_confidence
+      - before_weighted_component
+      - after_weighted_component
+      - delta
+      - comparable
+      - source_changed
+      title: ObservationContribution
+    ObservationCreate:
+      properties:
+        alternative_key:
+          type: string
+          maxLength: 64
+          minLength: 1
+          title: Alternative Key
+        criterion_key:
+          type: string
+          maxLength: 64
+          minLength: 1
+          title: Criterion Key
+        score:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Score
+        confidence:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Confidence
+        source_ref:
+          type: string
+          maxLength: 1000
+          minLength: 1
+          title: Source Ref
+        note:
+          type: string
+          maxLength: 2000
+          title: Note
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - alternative_key
+      - criterion_key
+      - score
+      - confidence
+      - source_ref
+      title: ObservationCreate
+    RankedAlternative:
+      properties:
+        alternative_key:
+          type: string
+          title: Alternative Key
+        score:
+          type: number
+          title: Score
+        coverage:
+          type: number
+          title: Coverage
+        eligible:
+          type: boolean
+          title: Eligible
+        rank:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rank
+        blockers:
+          items:
+            type: string
+          type: array
+          title: Blockers
+        insufficiencies:
+          items:
+            type: string
+          type: array
+          title: Insufficiencies
+      type: object
+      required:
+      - alternative_key
+      - score
+      - coverage
+      - eligible
+      - rank
+      - blockers
+      - insufficiencies
+      title: RankedAlternative
+    RecomputedEvaluationSnapshot:
+      properties:
+        evaluation_id:
+          type: string
+          title: Evaluation Id
+        decision_id:
+          type: string
+          title: Decision Id
+        evaluation_method:
+          type: string
+          title: Evaluation Method
+        status:
+          type: string
+          enum:
+          - RECOMMENDED
+          - BLOCKED
+          - INSUFFICIENT
+          title: Status
+        recommended_alternative_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Recommended Alternative Key
+        ranking:
+          items:
+            $ref: '#/components/schemas/RankedAlternative'
+          type: array
+          title: Ranking
+        winner_margin:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Winner Margin
+        decision_hash:
+          type: string
+          title: Decision Hash
+        recomputed_outcome_hash:
+          type: string
+          title: Recomputed Outcome Hash
+      additionalProperties: false
+      type: object
+      required:
+      - evaluation_id
+      - decision_id
+      - evaluation_method
+      - status
+      - recommended_alternative_key
+      - ranking
+      - winner_margin
+      - decision_hash
+      - recomputed_outcome_hash
+      title: RecomputedEvaluationSnapshot
+    SensitivityAnalysis:
+      properties:
+        id:
+          type: string
+          title: Id
+        evaluation_id:
+          type: string
+          title: Evaluation Id
+        decision_id:
+          type: string
+          title: Decision Id
+        method:
+          type: string
+          title: Method
+        policy:
+          type: string
+          title: Policy
+        qualification:
+          type: string
+          enum:
+          - ROBUST
+          - FRAGILE
+          - INSUFFICIENT
+          title: Qualification
+        baseline_winner_alternative_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Baseline Winner Alternative Key
+        winner_stability:
+          type: number
+          title: Winner Stability
+        minimum_winner_margin:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Minimum Winner Margin
+        scenarios:
+          items:
+            $ref: '#/components/schemas/SensitivityScenario'
+          type: array
+          title: Scenarios
+        reasons:
+          items:
+            type: string
+          type: array
+          title: Reasons
+        evaluation_hash:
+          type: string
+          title: Evaluation Hash
+        analysis_hash:
+          type: string
+          title: Analysis Hash
+        reproducible:
+          type: boolean
+          title: Reproducible
+          default: true
+        idempotent_replay:
+          type: boolean
+          title: Idempotent Replay
+          default: false
+        immutable:
+          type: boolean
+          title: Immutable
+          default: true
+        created_at:
+          type: string
+          title: Created At
+        warning:
+          type: string
+          title: Warning
+          default: Cette analyse de sensibilité décrit uniquement la stabilité sous
+            la politique de perturbation indiquée. Elle ne déclenche aucune action
+            et ne remplace pas une validation humaine.
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - evaluation_id
+      - decision_id
+      - method
+      - policy
+      - qualification
+      - baseline_winner_alternative_key
+      - winner_stability
+      - minimum_winner_margin
+      - scenarios
+      - reasons
+      - evaluation_hash
+      - analysis_hash
+      - created_at
+      title: SensitivityAnalysis
+    SensitivityAnalysisCreate:
+      properties:
+        evaluation_id:
+          type: string
+          minLength: 1
+          title: Evaluation Id
+        method:
+          type: string
+          const: weight-sensitivity-v1
+          title: Method
+          default: weight-sensitivity-v1
+        policy:
+          type: string
+          const: bounded-oat-10pct-v1
+          title: Policy
+          default: bounded-oat-10pct-v1
+      additionalProperties: false
+      type: object
+      required:
+      - evaluation_id
+      title: SensitivityAnalysisCreate
+    SensitivityScenario:
+      properties:
+        scenario_id:
+          type: string
+          title: Scenario Id
+        criterion_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Criterion Key
+        direction:
+          type: string
+          enum:
+          - BASELINE
+          - DECREASE
+          - INCREASE
+          title: Direction
+        normalized_weights:
+          additionalProperties:
+            type: number
+          type: object
+          title: Normalized Weights
+        evaluation_status:
+          type: string
+          enum:
+          - RECOMMENDED
+          - BLOCKED
+          - INSUFFICIENT
+          title: Evaluation Status
+        winner_alternative_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Winner Alternative Key
+        winner_margin:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Winner Margin
+        ranking:
+          items:
+            $ref: '#/components/schemas/RankedAlternative'
+          type: array
+          title: Ranking
+      additionalProperties: false
+      type: object
+      required:
+      - scenario_id
+      - criterion_key
+      - direction
+      - normalized_weights
+      - evaluation_status
+      - winner_alternative_key
+      - winner_margin
+      - ranking
+      title: SensitivityScenario
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
