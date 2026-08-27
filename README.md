@@ -1,3 +1,5 @@
+> **Présentation → [docs/PRESENTATION.md](docs/PRESENTATION.md)** — à quoi ça sert, cas d'usages, usages futurs.
+
 # DecisionForge V1.07
 
 DecisionForge est un registre autonome de décisions traçables. Il fige un problème, ses alternatives,
@@ -324,3 +326,4 @@ transitions expliquées ou partielles. Il ne produit aucun ordre d'action.
 ```
 
 Le script exécute les tests réels et `compileall`. Le contrat statique OpenAPI 3.1 est aussi contrôlé par la suite de tests.
+
